@@ -1,0 +1,77 @@
+<div class="container p-3 my-3 border">
+    <h3>Orders Received</h3>
+    <p>List of orders received can be found in the left panel. And the order details can be viewed in the right panel by clicking on particular order.</p>
+</div>
+
+<div class="container p-3 my-3">
+    <div class="row">
+      <div class="col-sm-5" style="max-height: 600px; overflow-y: auto;">
+        <div class="container p-3 my-3 border" *ngFor="let order of orders; let i = index">
+            <div class="card text-white" [ngClass]="{'Order Received': 'bg-dark', 'Preparing': 'bg-warning', 'Ready to serve': 'bg-success'}[order.status]" style="cursor: pointer;" (click)="onClickOrder(order,i)">
+                <div class="card-body">
+                    <p>Customer Name : {{order.customerName}}</p>
+                    <p>No.of Items ordered : {{order.itemsNo}}</p>
+                    <p>Total Amount of Order : {{order.totalAmount}}</p>
+                    <p>Order Status : {{order.status}}</p>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="col-sm-7">
+        <div class="container p-3 my-3 border" style="max-height: 550px; overflow-y: auto;"> 
+            <ng-container *ngIf="!selectedOrder.customerName">
+                <p>Please select any one of the order to view the details or change the status of the order.</p>
+            </ng-container>
+            <ng-container *ngIf="selectedOrder.customerName">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <h3>Order Details</h3>
+                    </div>
+                    <div class="col-sm-4">
+                        <button  class="btn btn-primary" type="button" (click)="changeStatus()">Change Status</button>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p>Customer Name : <span style="font-weight: bold;">{{selectedOrder.customerName}}</span></p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p>Status : <span style="font-weight: bold;">{{selectedOrder.status}}</span></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p style="font: bold;">Customer Address :</p>
+                        <p>{{selectedOrder.customerAddress1}}</p>
+                        <p>{{selectedOrder.customerAddress2}}</p>
+                        <p>{{selectedOrder.customerAddress3}}</p>
+                    </div>
+                </div>
+                <hr>
+                <h5>Items</h5>
+                <div class="row" *ngFor="let item of selectedOrder.items">
+                    <div class="col-sm-6">
+                        <p>{{item.itemName}}</p>
+                    </div>
+                    <div class="col-sm-2">
+                        <p>-</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <p>{{item.itemPrice}} Rs</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <h6>Total</h6>
+                    </div>
+                    <div class="col-sm-4">
+                        <p style="font-weight: bold;">{{selectedOrder.totalAmount}} Rs</p>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
